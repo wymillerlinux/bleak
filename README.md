@@ -13,4 +13,4 @@ Future possibilities:
 
 * Samsung SmartThings TV
 * Android TV
-* Amsozn's Fire TV
+* Amszon's Fire TV
