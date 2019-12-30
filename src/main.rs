@@ -1,18 +1,16 @@
 // external crates getting imported
-extern crate ureq;
+extern crate chrono;
+extern crate reqwest;
+extern crate select;
 extern crate serde;
 extern crate serde_derive;
 extern crate serde_json;
-extern crate xml;
-
-// standard library stuff
-use std::fs::File;
-use std::io::{BufReader, Read};
+extern crate time;
 
 // actual third party library being imported
 use serde::{Deserialize, Serialize};
 use serde_json::Result;
-use xml::reader::{EventReader, XmlEvent};
+use time::Duration;
 
 // local files that need to be imported
 mod app;
@@ -21,5 +19,23 @@ mod generate;
 
 fn main() {
     let configuration = config::init_config();
-    println!("{:?}", configuration.ipaddr);
+    println!("{:?}", configuration);
+
+    loop {
+        let text = config::get_tv_status(&configuration);
+
+        let activeapp = app::match_to_app(text);
+
+        match activeapp {
+            app::ActiveApp::Roku => println!("The lights are light purple!"),
+            app::ActiveApp::Netflix => println!("The lights are red!"),
+            app::ActiveApp::Hulu => println!("The lights are green!"),
+            app::ActiveApp::AmazonPrime => println!("The light are light blue!"),
+            app::ActiveApp::Spotify => println!("The lights are light green!"),
+            _ => println!("Oops!"),
+        }
+
+        time::Duration::seconds(1);
+        //println!("{:?}", text as str);
+    }
 }
