@@ -1,16 +1,16 @@
 // external crates getting imported
-extern crate chrono;
 extern crate reqwest;
 extern crate select;
 extern crate serde;
 extern crate serde_derive;
 extern crate serde_json;
-extern crate time;
+
+// std lib imports
+use std::{thread, time};
 
 // actual third party library being imported
 use serde::{Deserialize, Serialize};
 use serde_json::Result;
-use time::Duration;
 
 // local files that need to be imported
 mod app;
@@ -35,7 +35,8 @@ fn main() {
             _ => println!("Oops!"),
         }
 
-        time::Duration::seconds(1);
+        let sec = time::Duration::from_secs(1);
+        thread::sleep(sec);
         //println!("{:?}", text as str);
     }
 }
