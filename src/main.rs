@@ -16,6 +16,7 @@ use serde_json::Result;
 mod app;
 mod config;
 mod generate;
+mod led;
 
 fn main() {
     let configuration = config::init_config();

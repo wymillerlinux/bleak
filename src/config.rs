@@ -5,6 +5,7 @@ extern crate serde_json;
 use std::fs::File;
 use std::io::{BufReader, Read};
 use std::path::Path;
+use std::future::Future;
 
 use reqwest::Client;
 use select::document::Document;
@@ -50,7 +51,7 @@ impl Configuration {
             ipaddr = self.ipaddr,
             port = self.port
         );
-
+        
         let response = reqwest::get(&request).unwrap();
         let document = Document::from_read(response).unwrap();
         let next = document.find(Name("power-mode")).next().unwrap();
