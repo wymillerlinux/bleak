@@ -29,6 +29,35 @@ impl Configuration {
     pub fn change_active_app(&mut self) {
         // stuff happens here
     }
+
+    pub fn get_tv_status(&self) -> String {
+        let request = format!(
+            "http://{ipaddr}:{port}/query/active-app",
+            ipaddr = self.ipaddr,
+            port = self.port
+        );
+
+        let response = reqwest::get(&request).unwrap();
+        let document = Document::from_read(response).unwrap();
+        let next = document.find(Name("app")).next().unwrap();
+
+        next.text().to_string()
+    }
+
+    pub fn get_power_status(&self) -> String {
+        let request = format!(
+            "http://{ipaddr}:{port}/query/device-info",
+            ipaddr = self.ipaddr,
+            port = self.port
+        );
+
+        let response = reqwest::get(&request).unwrap();
+        let document = Document::from_read(response).unwrap();
+        let next = document.find(Name("power-mode")).next().unwrap();
+
+        next.text().to_string()
+    }
+
 }
 
 // grab the config
@@ -40,18 +69,4 @@ pub fn init_config() -> Configuration {
     let config: Configuration = serde_json::from_str(&data).expect("Couldn't parse JSON!");
 
     config
-}
-
-pub fn get_tv_status(configuration: &Configuration) -> String {
-    let request = format!(
-        "http://{ipaddr}:{port}/query/active-app",
-        ipaddr = configuration.ipaddr,
-        port = configuration.port
-    );
-    let response = reqwest::get(&request).unwrap();
-    //println!("{}", response.status());
-    let document = Document::from_read(response).unwrap();
-    let next = document.find(Name("app")).next().unwrap();
-
-    next.text().to_string()
 }

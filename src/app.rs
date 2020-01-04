@@ -13,11 +13,17 @@ pub enum ActiveApp {
 }
 
 // enum used to select what kind of TV you are using
+// not used atm
 pub enum TV {
     Roku,
     Android,
     Samsung,
     Amazon,
+}
+
+pub enum TVPower {
+    On,
+    Off,
 }
 
 pub fn match_to_app(text: String) -> ActiveApp {
@@ -32,5 +38,12 @@ pub fn match_to_app(text: String) -> ActiveApp {
         Some("Pandora") => ActiveApp::Pandora,
         Some("Spotify") => ActiveApp::Spotify,
         _ => ActiveApp::Roku,
+    }
+}
+
+pub fn match_to_power_status(text: String) -> TVPower {
+    match text.trim() {
+        "PowerOn" => TVPower::On,
+        _ => TVPower::Off,
     }
 }

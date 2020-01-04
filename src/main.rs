@@ -22,9 +22,11 @@ fn main() {
     println!("{:?}", configuration);
 
     loop {
-        let text = config::get_tv_status(&configuration);
+        let app_text = configuration.get_tv_status();
+        let power_text = configuration.get_power_status();
 
-        let activeapp = app::match_to_app(text);
+        let activeapp = app::match_to_app(app_text);
+        let tvpower = app::match_to_power_status(power_text);
 
         match activeapp {
             app::ActiveApp::Roku => println!("The lights are light purple!"),
@@ -35,8 +37,13 @@ fn main() {
             _ => println!("Oops!"),
         }
 
-        let sec = time::Duration::from_secs(1);
+        match tvpower {
+            app::TVPower::On => println!("TV is on!"),
+            app::TVPower::Off => println!("TV is off!"),
+            _ => println!("We don't know what the power status of the TV is..."),
+        }
+
+        let sec = time::Duration::from_secs(3);
         thread::sleep(sec);
-        //println!("{:?}", text as str);
     }
 }
