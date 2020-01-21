@@ -31,7 +31,18 @@ fn main() {
 
         match activeapp {
             app::ActiveApp::Roku => println!("The lights are light purple!"),
-            app::ActiveApp::Netflix => println!("The lights are red!"),
+            app::ActiveApp::Netflix => {
+                let mut panel = led::Led::new(256);
+
+                let color: Vec<led::ColorRGB> = [0; 265].iter().map(|val| {
+                    match val {
+                        0 => led::ColorRGB(0x03, 0x00, 0x00),
+                        _ => panic!("Invalid color!"),
+                    }
+                }).collect();
+
+                panel.set_leds(&color);
+            },
             app::ActiveApp::Hulu => println!("The lights are green!"),
             app::ActiveApp::AmazonPrime => println!("The light are light blue!"),
             app::ActiveApp::Spotify => println!("The lights are light green!"),
