@@ -13,9 +13,8 @@ use std::error::Error;
 use rppal::spi::{Bus, Mode, SlaveSelect, Spi};
 use rppal::gpio::Gpio;
 use rppal::hal::{Delay, Timer};
-use smart_leds::{RGB8, SmartLedsWrite, brightness};
+use smart_leds::{colors, hsv::{Hsv, hsv2rgb}, RGB8, SmartLedsWrite, brightness};
 use ws2812_spi::Ws2812;
-use embedded_hal;
 
 // local files that need to be imported
 mod app;
@@ -30,44 +29,88 @@ fn main() {
     let spi = Spi::new(Bus::Spi0, SlaveSelect::Ss0, 3_000_000, Mode::Mode0).unwrap();
     let mut ws = Ws2812::new(spi);
     let delay = Delay::new();
-    let configuration = config::init_config();
-    println!("{:?}", configuration);
-
-
-    // let gil = Python::acquire_gil();
-    // let py = gil.python();
-    // let m = PyModule::import(py, "led.py").unwrap();
+    let mut configuration = config::init_config();
 
     loop {
-        let app_text = configuration.get_tv_status();
-        let power_text = configuration.get_power_status();
+        println!("{:?}", configuration);
 
-        let activeapp = app::match_to_app(app_text);
-        let tvpower = app::match_to_power_status(power_text);
+        if false == configuration.is_change_app() {
+            let app_text = configuration.get_app_status();
+            configuration.change_active_app(&app_text);
+            let activeapp = app::match_to_app(app_text);
 
-        match activeapp {
-            app::ActiveApp::Roku => println!("The lights are light purple!"),
-            app::ActiveApp::Netflix => {
-                let green = RGB8::new(255, 0, 0);
-                let mut data = [RGB8::default(); NUM_LEDS];
+            match activeapp {
+                app::ActiveApp::Roku => {
+                    let color = RGB8::new(255, 0, 255);
+                    let mut data = [RGB8::default(); NUM_LEDS];
 
-                for j in 0..(256 * 5) {
                     for i in 0..NUM_LEDS {
-                        data[i] = wheel((((i * 256) as u16 / NUM_LEDS as u16 + j as u16) & 255) as u8);
+                        data[i] = color;
                     }
                     ws.write(brightness(data.iter().cloned(), 32)).unwrap();
-                }
-            },
-            app::ActiveApp::Hulu => println!("The lights are green!"),
-            app::ActiveApp::AmazonPrime => println!("The light are light blue!"),
-            app::ActiveApp::Spotify => println!("The lights are light green!"),
-            _ => println!("Oops!"),
+                },
+                app::ActiveApp::Hulu => {
+                    let green = RGB8::new(51, 255, 85);
+                    let mut data = [RGB8::default(); NUM_LEDS];
+
+                    for i in 0..NUM_LEDS {
+                        data[i] = green;
+                    }
+                    ws.write(brightness(data.iter().cloned(), 32)).unwrap();
+                },
+                app::ActiveApp::Netflix => {
+                    let red = RGB8::new(255, 77, 77);
+                    let mut data = [RGB8::default(); NUM_LEDS];
+
+                    for i in 0..NUM_LEDS {
+                        data[i] = red;
+                    }
+                    ws.write(brightness(data.iter().cloned(), 32)).unwrap();
+                },
+                app::ActiveApp::AmazonPrime => println!("The light are light blue!"),
+                app::ActiveApp::Spotify => {
+                    let green = RGB8::new(51, 255, 85);
+                    let mut data = [RGB8::default(); NUM_LEDS];
+
+                    for i in 0..NUM_LEDS {
+                        data[i] = green;
+                    }
+                    ws.write(brightness(data.iter().cloned(), 32)).unwrap();
+                },
+                app::ActiveApp::Plex => {
+                    let orange = RGB8::new(255, 187, 51);
+                    let mut data = [RGB8::default(); NUM_LEDS];
+
+                    for i in 0..NUM_LEDS {
+                        data[i] = orange;
+                    }
+                    ws.write(brightness(data.iter().cloned(), 32)).unwrap();               
+                },
+                _ => println!("Oops!"),
+            }
         }
 
-        match tvpower {
-            app::TVPower::On => println!("TV is on!"),
-            app::TVPower::Off => println!("TV is off"),
-            _ => println!("We don't know what the power status of the TV is..."),
+        if false == configuration.is_change_power() {            
+            let power_text = configuration.get_power_status();
+            configuration.change_power(&power_text);
+            let tvpower = app::match_to_power_status(power_text);
+
+            match tvpower {
+                app::TVPower::On => {
+                    continue
+                },
+                app::TVPower::Off => {
+                    let color = RGB8::new(0, 0, 0);
+                    let mut data = [RGB8::default(); NUM_LEDS];
+
+                    for i in 0..NUM_LEDS {
+                        data[i] = color;
+                    }
+
+                    ws.write(brightness(data.iter().cloned(), 32)).unwrap();
+                },
+                _ => println!("We don't know what the power status of the TV is..."),
+            }            
         }
 
         let sec = time::Duration::from_secs(3);
