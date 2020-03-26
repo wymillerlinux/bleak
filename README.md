@@ -3,7 +3,15 @@ Change the aura of the room with your smart TV!
 
 ## What is this??
 
-This came from an idea in high school where one could change a channel and some LEDs could change color. This project is just that, only with Smart TV's. One changes the application to Netflix, the LEDs turn red. Another changes the application to Hulu, the LEDs turn green.
+This came from an idea in high school where one could change a channel and some LEDs could change color. This project is just that, only with Smart TV's (Roku TV's and Roku devices supported). One changes the application to Netflix, the LEDs turn red. Another changes the application to Hulu, the LEDs turn green.
+
+## How does it work?
+
+`bleak` sends out a API request to your Roku TV/Roku device you specify in a JSON file, which is read by `bleak`, and based on that response, the LEDs will change color. These requests happen at one second intervals.
+
+TL;DR
+
+Read the source code.
 
 ## Pre req's
 
@@ -48,7 +56,7 @@ I wrote a systmed service file so starting and stopping would be like I'm starti
 ## Troubleshooting
 
 Things that I've noticed:
-* `bleak` will fail from time to time. There's no error handling at this point.
+* `bleak` will fail from time to time when grabbing responses. There's no error handling at this point.
 * `bleak` like to change color to some random color(s) when being told to change color to, say, green or red.
 * Roku TV's tend to be slow while `bleak` is running. Can't reproduce this problem, however...
 
