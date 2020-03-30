@@ -17,7 +17,7 @@ Read the source code.
 
 * A Raspberry Pi (tested with a Raspberry Pi 4)
 * A WS2818B LED strip
-* Rust 1.40+ (this is the version of Rust `bleak` was written in)
+* Rust 1.40+ (this is the version of Rust `bleak` was written in) However, any version of Rust 2018 will most likely be fine
 
 ## Installation
 
