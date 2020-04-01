@@ -68,6 +68,9 @@ impl Configuration {
         next.text().to_string()
     }
 
+    pub fn change_color(num_leds: usize, num_one: &u8, num_two: &u8, num_three: &u8) {
+        // code goes here
+    }
 }
 
 // grab the config
