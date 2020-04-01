@@ -7,13 +7,10 @@ extern crate serde_json;
 
 // std lib imports
 use std::{thread, time};
-use std::error::Error;
 
 // actual third party library being imported
 use rppal::spi::{Bus, Mode, SlaveSelect, Spi};
-use rppal::gpio::Gpio;
-use rppal::hal::{Delay, Timer};
-use smart_leds::{colors, hsv::{Hsv, hsv2rgb}, RGB8, SmartLedsWrite, brightness};
+use smart_leds::{RGB8, SmartLedsWrite, brightness};
 use ws2812_spi::Ws2812;
 
 // local files that need to be imported
@@ -22,13 +19,11 @@ mod config;
 mod generate;
 mod led;
 
-const GPIO_PIN: u8 = 19;
 const NUM_LEDS: usize = 150;
 
 fn main() {
     let spi = Spi::new(Bus::Spi0, SlaveSelect::Ss0, 3_000_000, Mode::Mode0).unwrap();
     let mut ws = Ws2812::new(spi);
-    let delay = Delay::new();
     let mut configuration = config::init_config();
     let mut headless_count: u32 = 0;
 
