@@ -2,16 +2,13 @@ extern crate serde;
 extern crate serde_derive;
 extern crate serde_json;
 
-use std::fs::{write, File};
-use std::io::{BufReader, Read, BufWriter, Write};
+use std::fs::File;
+use std::io::Read;
 use std::path::Path;
-use std::future::Future;
 
-use reqwest::Client;
 use select::document::Document;
 use select::predicate::Name;
 use serde::{Serialize, Deserialize};
-use serde_json::Result;
 
 // config structure
 #[derive(Serialize, Deserialize, Debug)]
@@ -66,10 +63,6 @@ impl Configuration {
         let next = document.find(Name("power-mode")).next().unwrap();
 
         next.text().to_string()
-    }
-
-    pub fn change_color(num_leds: usize, num_one: &u8, num_two: &u8, num_three: &u8) {
-        // code goes here
     }
 }
 

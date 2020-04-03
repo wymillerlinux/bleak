@@ -1,4 +1,5 @@
 // enum used when a certain TV app is being used
+#[warn(dead_code)]
 pub enum ActiveApp {
     Roku,
     Netflix,
@@ -14,6 +15,7 @@ pub enum ActiveApp {
 
 // enum used to select what kind of TV you are using
 // not used atm
+#[warn(dead_code)]
 pub enum TV {
     Roku,
     Android,

@@ -17,7 +17,6 @@ use ws2812_spi::Ws2812;
 mod app;
 mod config;
 mod generate;
-mod led;
 
 const NUM_LEDS: usize = 150;
 
@@ -25,7 +24,7 @@ fn main() {
     let spi = Spi::new(Bus::Spi0, SlaveSelect::Ss0, 3_000_000, Mode::Mode0).unwrap();
     let mut ws = Ws2812::new(spi);
     let mut configuration = config::init_config();
-    let mut headless_count: u32 = 0;
+    let mut is_headless: bool = false;
 
     loop {
         println!("{:?}", configuration);
@@ -37,9 +36,8 @@ fn main() {
 
         match tvpower {
             app::TVPower::Off => {
-                headless_count += headless_count + 1;
-
-                if headless_count <= 2 {
+                if is_headless == false {
+                    is_headless = true;
                     let color = RGB8::new(0, 0, 0);
                     let mut data = [RGB8::default(); NUM_LEDS];
 
@@ -52,7 +50,7 @@ fn main() {
             },
             app::TVPower::On => {
                 if false == configuration.is_change_app() {
-                    headless_count = 0;
+                    is_headless = false;
 
                     let app_text = configuration.get_app_status();
                     configuration.change_active_app(&app_text);
@@ -115,4 +113,9 @@ fn main() {
         let sec = time::Duration::from_secs(1);
         thread::sleep(sec);
     }            
+}
+
+#[warn(unreachable_patterns)]
+pub fn change_color(_num_leds: usize, _num_one: &u8, _num_two: &u8, _num_three: &u8) {
+    // code goes here
 }
