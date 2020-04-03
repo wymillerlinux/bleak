@@ -1,6 +1,8 @@
 # bleak
 Change the aura of the room with your smart TV!
 
+This project is licensed by the [Mozilla Public License v2](https://www.mozilla.org/en-US/MPL/2.0/).
+
 ## What is this??
 
 This came from an idea in high school where one could change a channel and some LEDs could change color. This project is just that, only with Smart TV's (Roku TV's and Roku devices supported). One changes the application to Netflix, the LEDs turn red. Another changes the application to Hulu, the LEDs turn green.
