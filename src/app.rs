@@ -11,6 +11,7 @@ pub enum ActiveApp {
     Crunchyroll,
     Funimation,
     VRV,
+    Nothing
 }
 
 // enum used to select what kind of TV you are using
@@ -40,7 +41,7 @@ pub fn match_to_app(text: String) -> ActiveApp {
         Some("Pandora") => ActiveApp::Pandora,
         Some("Spotify") => ActiveApp::Spotify,
         Some("Plex") => ActiveApp::Plex,
-        _ => ActiveApp::Roku,
+        _ => ActiveApp::Nothing,
     }
 }
 

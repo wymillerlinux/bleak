@@ -44,11 +44,15 @@ impl Configuration {
             port = self.port
         );
 
-        let response = reqwest::get(&request).unwrap();
-        let document = Document::from_read(response).unwrap();
-        let next = document.find(Name("app")).next().unwrap();
-
-        next.text().to_string()
+        let response = get_request(&request);
+        match response {
+            Ok(res) =>  {
+                let document = Document::from_read(res).unwrap();
+                let next = document.find(Name("app")).next().unwrap();
+                next.text().to_string()
+            }
+            Err(_) => "_".to_string()         
+        }
     }
 
     pub fn get_power_status(&self) -> String {
@@ -58,11 +62,15 @@ impl Configuration {
             port = self.port
         );
         
-        let response = reqwest::get(&request).unwrap();
-        let document = Document::from_read(response).unwrap();
-        let next = document.find(Name("power-mode")).next().unwrap();
-
-        next.text().to_string()
+        let response = get_request(&request);
+        match response {
+            Ok(res) =>  {
+                let document = Document::from_read(res).unwrap();
+                let next = document.find(Name("power-mode")).next().unwrap();
+                next.text().to_string()
+            }
+            Err(_) => "_".to_string()         
+        }
     }
 }
 
@@ -75,4 +83,9 @@ pub fn init_config() -> Configuration {
     let config: Configuration = serde_json::from_str(&data).expect("Couldn't parse JSON!");
 
     config
+}
+
+pub fn get_request(request: &String) -> Result<reqwest::Response, reqwest::Error> {
+    let response = reqwest::get(request);
+    response
 }

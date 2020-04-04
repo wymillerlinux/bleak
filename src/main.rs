@@ -103,7 +103,7 @@ fn main() {
                             }
                             ws.write(brightness(data.iter().cloned(), 32)).unwrap();               
                         },
-                        _ => println!("Oops!"),
+                        _ => println!("We don't know what app is running right now..."),
                     }
                 }
             },
