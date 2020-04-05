@@ -58,49 +58,24 @@ fn main() {
 
                     match activeapp {
                         app::ActiveApp::Roku => {
-                            let color = RGB8::new(255, 0, 255);
-                            let mut data = [RGB8::default(); NUM_LEDS];
-
-                            for i in 0..NUM_LEDS {
-                                data[i] = color;
-                            }
+                            let data = change_color(&255, &0, &255);
                             ws.write(brightness(data.iter().cloned(), 10)).unwrap();
                         },
                         app::ActiveApp::Hulu => {
-                            let green = RGB8::new(51, 255, 85);
-                            let mut data = [RGB8::default(); NUM_LEDS];
-
-                            for i in 0..NUM_LEDS {
-                                data[i] = green;
-                            }
+                            let data = change_color(&51, &255, &85);
                             ws.write(brightness(data.iter().cloned(), 32)).unwrap();
                         },
                         app::ActiveApp::Netflix => {
-                            let red = RGB8::new(255, 77, 77);
-                            let mut data = [RGB8::default(); NUM_LEDS];
-
-                            for i in 0..NUM_LEDS {
-                                data[i] = red;
-                            }
+                            let data = change_color(&255, &77, &77);
                             ws.write(brightness(data.iter().cloned(), 32)).unwrap();
                         },
                         app::ActiveApp::AmazonPrime => println!("The light are light blue!"),
                         app::ActiveApp::Spotify => {
-                            let green = RGB8::new(51, 255, 85);
-                            let mut data = [RGB8::default(); NUM_LEDS];
-
-                            for i in 0..NUM_LEDS {
-                                data[i] = green;
-                            }
+                            let data = change_color(&51, &255, &85);
                             ws.write(brightness(data.iter().cloned(), 32)).unwrap();
                         },
                         app::ActiveApp::Plex => {
-                            let orange = RGB8::new(255, 187, 51);
-                            let mut data = [RGB8::default(); NUM_LEDS];
-
-                            for i in 0..NUM_LEDS {
-                                data[i] = orange;
-                            }
+                            let data = change_color(&255, &187, &51);
                             ws.write(brightness(data.iter().cloned(), 32)).unwrap();               
                         },
                         _ => println!("We don't know what app is running right now..."),
@@ -115,7 +90,13 @@ fn main() {
     }            
 }
 
-#[warn(unreachable_patterns)]
-pub fn change_color(_num_leds: usize, _num_one: &u8, _num_two: &u8, _num_three: &u8) {
-    // code goes here
+fn change_color(num_one: &u8, num_two: &u8, num_three: &u8) -> [RGB8; 150] {
+    let color = RGB8::new(*num_one, *num_two, *num_three);
+    let mut data = [RGB8::default(); NUM_LEDS];
+
+    for i in 0..NUM_LEDS {
+        data[i] = color;
+    }
+
+    data
 }
