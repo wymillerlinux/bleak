@@ -1,7 +1,3 @@
-extern crate serde;
-extern crate serde_derive;
-extern crate serde_json;
-
 use std::fs::File;
 use std::io::Read;
 use std::path::Path;
@@ -47,9 +43,13 @@ impl Configuration {
         let response = get_request(&request);
         match response {
             Ok(res) =>  {
-                let document = Document::from_read(res).unwrap();
-                let next = document.find(Name("app")).next().unwrap();
-                next.text().to_string()
+                let document = Document::from_read(res)
+                    .unwrap();
+                let next = document.find(Name("app"))
+                    .next()
+                    .unwrap();
+                next.text()
+                    .to_string()
             }
             Err(_) => "_".to_string()         
         }
@@ -65,9 +65,13 @@ impl Configuration {
         let response = get_request(&request);
         match response {
             Ok(res) =>  {
-                let document = Document::from_read(res).unwrap();
-                let next = document.find(Name("power-mode")).next().unwrap();
-                next.text().to_string()
+                let document = Document::from_read(res)
+                    .unwrap();
+                let next = document.find(Name("power-mode"))
+                    .next()
+                    .unwrap();
+                next.text()
+                    .to_string()
             }
             Err(_) => "_".to_string()         
         }

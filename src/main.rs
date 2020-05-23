@@ -1,10 +1,3 @@
-// external crates getting imported
-extern crate reqwest;
-extern crate select;
-extern crate serde;
-extern crate serde_derive;
-extern crate serde_json;
-
 // std lib imports
 use std::{thread, time};
 
@@ -21,7 +14,8 @@ mod generate;
 const NUM_LEDS: usize = 150;
 
 fn main() {
-    let spi = Spi::new(Bus::Spi0, SlaveSelect::Ss0, 3_000_000, Mode::Mode0).unwrap();
+    let spi = Spi::new(Bus::Spi0, SlaveSelect::Ss0, 3_000_000, Mode::Mode0)
+        .unwrap();
     let mut ws = Ws2812::new(spi);
     let mut configuration = config::init_config();
     let mut is_headless: bool = false;
@@ -45,7 +39,8 @@ fn main() {
                         data[i] = color;
                     }
                     
-                    ws.write(brightness(data.iter().cloned(), 32)).unwrap();
+                    ws.write(brightness(data.iter().cloned(), 32))
+                        .unwrap();
                 }
             },
             app::TVPower::On => {
@@ -59,24 +54,29 @@ fn main() {
                     match activeapp {
                         app::ActiveApp::Roku => {
                             let data = change_color(&255, &0, &255);
-                            ws.write(brightness(data.iter().cloned(), 10)).unwrap();
+                            ws.write(brightness(data.iter().cloned(), 10))
+                                .unwrap();
                         },
                         app::ActiveApp::Hulu => {
                             let data = change_color(&51, &255, &85);
-                            ws.write(brightness(data.iter().cloned(), 32)).unwrap();
+                            ws.write(brightness(data.iter().cloned(), 32))
+                                .unwrap();
                         },
                         app::ActiveApp::Netflix => {
                             let data = change_color(&255, &77, &77);
-                            ws.write(brightness(data.iter().cloned(), 32)).unwrap();
+                            ws.write(brightness(data.iter().cloned(), 32))
+                                .unwrap();
                         },
                         app::ActiveApp::AmazonPrime => println!("The light are light blue!"),
                         app::ActiveApp::Spotify => {
                             let data = change_color(&51, &255, &85);
-                            ws.write(brightness(data.iter().cloned(), 32)).unwrap();
+                            ws.write(brightness(data.iter().cloned(), 32))
+                                .unwrap();
                         },
                         app::ActiveApp::Plex => {
                             let data = change_color(&255, &187, &51);
-                            ws.write(brightness(data.iter().cloned(), 32)).unwrap();               
+                            ws.write(brightness(data.iter().cloned(), 32))
+                                .unwrap();               
                         },
                         _ => println!("We don't know what app is running right now..."),
                     }
