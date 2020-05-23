@@ -41,6 +41,9 @@ pub fn match_to_app(text: String) -> ActiveApp {
         Some("Pandora") => ActiveApp::Pandora,
         Some("Spotify") => ActiveApp::Spotify,
         Some("Plex") => ActiveApp::Plex,
+        Some("Crunchyroll") => ActiveApp::Crunchyroll,
+        Some("Funimation") => ActiveApp::Funimation,
+        Some("VRV") => ActiveApp::VRV,
         _ => ActiveApp::Nothing,
     }
 }

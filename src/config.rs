@@ -21,10 +21,6 @@ impl Configuration {
         self.active_app == self.get_app_status()
     }
 
-    pub fn is_change_power(&self) -> bool {
-        self.power_status == self.get_power_status()
-    }
-
     pub fn change_active_app(&mut self, app_text: &String) {
         self.active_app = app_text.to_string();
     }

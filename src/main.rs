@@ -23,7 +23,6 @@ fn main() {
     loop {
         println!("{:?}", configuration);
 
-            
         let power_text = configuration.get_power_status();
         configuration.change_power(&power_text);
         let tvpower = app::match_to_power_status(power_text);
@@ -67,7 +66,16 @@ fn main() {
                             ws.write(brightness(data.iter().cloned(), 32))
                                 .unwrap();
                         },
-                        app::ActiveApp::AmazonPrime => println!("The light are light blue!"),
+                        app::ActiveApp::AmazonPrime => {
+                            let data = change_color(&99, &123, &255);
+                            ws.write(brightness(data.iter().cloned(), 32))
+                                .unwrap();
+                        },
+                        app::ActiveApp::Pandora => {
+                            let data = change_color(&99, &123, &255);
+                            ws.write(brightness(data.iter().cloned(), 32))
+                                .unwrap();
+                        },
                         app::ActiveApp::Spotify => {
                             let data = change_color(&51, &255, &85);
                             ws.write(brightness(data.iter().cloned(), 32))
@@ -76,13 +84,27 @@ fn main() {
                         app::ActiveApp::Plex => {
                             let data = change_color(&255, &187, &51);
                             ws.write(brightness(data.iter().cloned(), 32))
+                                .unwrap();
+                        },
+                        app::ActiveApp::Crunchyroll => {
+                            let data = change_color(&255, &187, &51);
+                            ws.write(brightness(data.iter().cloned(), 32))
+                                .unwrap();
+                        },
+                        app::ActiveApp::Funimation => {
+                            let data = change_color(&255, &0, &255);
+                            ws.write(brightness(data.iter().cloned(), 32))
+                                .unwrap();
+                        },
+                        app::ActiveApp::VRV => {
+                            let data = change_color(&255, &187, &51);
+                            ws.write(brightness(data.iter().cloned(), 32))
                                 .unwrap();               
                         },
                         _ => println!("We don't know what app is running right now..."),
                     }
                 }
             },
-            _ => println!("We don't know what the power status of the TV is..."),
         }
 
         let sec = time::Duration::from_secs(1);
