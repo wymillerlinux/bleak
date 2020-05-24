@@ -1,10 +1,3 @@
-// external crates getting imported
-extern crate reqwest;
-extern crate select;
-extern crate serde;
-extern crate serde_derive;
-extern crate serde_json;
-
 // std lib imports
 use std::{thread, time};
 
@@ -17,11 +10,13 @@ use ws2812_spi::Ws2812;
 mod app;
 mod config;
 mod generate;
+mod request;
 
 const NUM_LEDS: usize = 150;
 
 fn main() {
-    let spi = Spi::new(Bus::Spi0, SlaveSelect::Ss0, 3_000_000, Mode::Mode0).unwrap();
+    let spi = Spi::new(Bus::Spi0, SlaveSelect::Ss0, 3_000_000, Mode::Mode0)
+        .unwrap();
     let mut ws = Ws2812::new(spi);
     let mut configuration = config::init_config();
     let mut is_headless: bool = false;
@@ -29,7 +24,6 @@ fn main() {
     loop {
         println!("{:?}", configuration);
 
-            
         let power_text = configuration.get_power_status();
         configuration.change_power(&power_text);
         let tvpower = app::match_to_power_status(power_text);
@@ -45,7 +39,8 @@ fn main() {
                         data[i] = color;
                     }
                     
-                    ws.write(brightness(data.iter().cloned(), 32)).unwrap();
+                    ws.write(brightness(data.iter().cloned(), 32))
+                        .unwrap();
                 }
             },
             app::TVPower::On => {
@@ -58,56 +53,59 @@ fn main() {
 
                     match activeapp {
                         app::ActiveApp::Roku => {
-                            let color = RGB8::new(255, 0, 255);
-                            let mut data = [RGB8::default(); NUM_LEDS];
-
-                            for i in 0..NUM_LEDS {
-                                data[i] = color;
-                            }
-                            ws.write(brightness(data.iter().cloned(), 10)).unwrap();
+                            let data = change_color(&255, &0, &255);
+                            ws.write(brightness(data.iter().cloned(), 10))
+                                .unwrap();
                         },
                         app::ActiveApp::Hulu => {
-                            let green = RGB8::new(51, 255, 85);
-                            let mut data = [RGB8::default(); NUM_LEDS];
-
-                            for i in 0..NUM_LEDS {
-                                data[i] = green;
-                            }
-                            ws.write(brightness(data.iter().cloned(), 32)).unwrap();
+                            let data = change_color(&51, &255, &85);
+                            ws.write(brightness(data.iter().cloned(), 32))
+                                .unwrap();
                         },
                         app::ActiveApp::Netflix => {
-                            let red = RGB8::new(255, 77, 77);
-                            let mut data = [RGB8::default(); NUM_LEDS];
-
-                            for i in 0..NUM_LEDS {
-                                data[i] = red;
-                            }
-                            ws.write(brightness(data.iter().cloned(), 32)).unwrap();
+                            let data = change_color(&255, &77, &77);
+                            ws.write(brightness(data.iter().cloned(), 32))
+                                .unwrap();
                         },
-                        app::ActiveApp::AmazonPrime => println!("The light are light blue!"),
+                        app::ActiveApp::AmazonPrime => {
+                            let data = change_color(&99, &123, &255);
+                            ws.write(brightness(data.iter().cloned(), 32))
+                                .unwrap();
+                        },
+                        app::ActiveApp::Pandora => {
+                            let data = change_color(&99, &123, &255);
+                            ws.write(brightness(data.iter().cloned(), 32))
+                                .unwrap();
+                        },
                         app::ActiveApp::Spotify => {
-                            let green = RGB8::new(51, 255, 85);
-                            let mut data = [RGB8::default(); NUM_LEDS];
-
-                            for i in 0..NUM_LEDS {
-                                data[i] = green;
-                            }
-                            ws.write(brightness(data.iter().cloned(), 32)).unwrap();
+                            let data = change_color(&51, &255, &85);
+                            ws.write(brightness(data.iter().cloned(), 32))
+                                .unwrap();
                         },
                         app::ActiveApp::Plex => {
-                            let orange = RGB8::new(255, 187, 51);
-                            let mut data = [RGB8::default(); NUM_LEDS];
-
-                            for i in 0..NUM_LEDS {
-                                data[i] = orange;
-                            }
-                            ws.write(brightness(data.iter().cloned(), 32)).unwrap();               
+                            let data = change_color(&255, &187, &51);
+                            ws.write(brightness(data.iter().cloned(), 32))
+                                .unwrap();
                         },
-                        _ => println!("Oops!"),
+                        app::ActiveApp::Crunchyroll => {
+                            let data = change_color(&255, &187, &51);
+                            ws.write(brightness(data.iter().cloned(), 32))
+                                .unwrap();
+                        },
+                        app::ActiveApp::Funimation => {
+                            let data = change_color(&255, &0, &255);
+                            ws.write(brightness(data.iter().cloned(), 32))
+                                .unwrap();
+                        },
+                        app::ActiveApp::VRV => {
+                            let data = change_color(&255, &187, &51);
+                            ws.write(brightness(data.iter().cloned(), 32))
+                                .unwrap();               
+                        },
+                        _ => println!("We don't know what app is running right now..."),
                     }
                 }
             },
-            _ => println!("We don't know what the power status of the TV is..."),
         }
 
         let sec = time::Duration::from_secs(1);
@@ -115,7 +113,13 @@ fn main() {
     }            
 }
 
-#[warn(unreachable_patterns)]
-pub fn change_color(_num_leds: usize, _num_one: &u8, _num_two: &u8, _num_three: &u8) {
-    // code goes here
+fn change_color(num_one: &u8, num_two: &u8, num_three: &u8) -> [RGB8; 150] {
+    let color = RGB8::new(*num_one, *num_two, *num_three);
+    let mut data = [RGB8::default(); NUM_LEDS];
+
+    for i in 0..NUM_LEDS {
+        data[i] = color;
+    }
+
+    data
 }

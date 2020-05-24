@@ -1,14 +1,12 @@
-extern crate serde;
-extern crate serde_derive;
-extern crate serde_json;
-
 use std::fs::File;
 use std::io::Read;
 use std::path::Path;
 
 use select::document::Document;
 use select::predicate::Name;
-use serde::{Serialize, Deserialize};
+use serde_derive::{Serialize, Deserialize};
+
+use crate::request;
 
 // config structure
 #[derive(Serialize, Deserialize, Debug)]
@@ -23,10 +21,6 @@ pub struct Configuration {
 impl Configuration {
     pub fn is_change_app(&self) -> bool {
         self.active_app == self.get_app_status()
-    }
-
-    pub fn is_change_power(&self) -> bool {
-        self.power_status == self.get_power_status()
     }
 
     pub fn change_active_app(&mut self, app_text: &String) {
@@ -44,11 +38,19 @@ impl Configuration {
             port = self.port
         );
 
-        let response = reqwest::get(&request).unwrap();
-        let document = Document::from_read(response).unwrap();
-        let next = document.find(Name("app")).next().unwrap();
-
-        next.text().to_string()
+        let response = request::get_request(&request);
+        match response {
+            Ok(res) =>  {
+                let document = Document::from_read(res)
+                    .unwrap();
+                let next = document.find(Name("app"))
+                    .next()
+                    .unwrap();
+                next.text()
+                    .to_string()
+            }
+            Err(_) => "_".to_string()         
+        }
     }
 
     pub fn get_power_status(&self) -> String {
@@ -58,11 +60,19 @@ impl Configuration {
             port = self.port
         );
         
-        let response = reqwest::get(&request).unwrap();
-        let document = Document::from_read(response).unwrap();
-        let next = document.find(Name("power-mode")).next().unwrap();
-
-        next.text().to_string()
+        let response = request::get_request(&request);
+        match response {
+            Ok(res) =>  {
+                let document = Document::from_read(res)
+                    .unwrap();
+                let next = document.find(Name("power-mode"))
+                    .next()
+                    .unwrap();
+                next.text()
+                    .to_string()
+            }
+            Err(_) => "_".to_string()         
+        }
     }
 }
 
