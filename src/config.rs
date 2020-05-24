@@ -4,7 +4,9 @@ use std::path::Path;
 
 use select::document::Document;
 use select::predicate::Name;
-use serde::{Serialize, Deserialize};
+use serde_derive::{Serialize, Deserialize};
+
+use crate::request;
 
 // config structure
 #[derive(Serialize, Deserialize, Debug)]
@@ -36,7 +38,7 @@ impl Configuration {
             port = self.port
         );
 
-        let response = get_request(&request);
+        let response = request::get_request(&request);
         match response {
             Ok(res) =>  {
                 let document = Document::from_read(res)
@@ -58,7 +60,7 @@ impl Configuration {
             port = self.port
         );
         
-        let response = get_request(&request);
+        let response = request::get_request(&request);
         match response {
             Ok(res) =>  {
                 let document = Document::from_read(res)
@@ -83,9 +85,4 @@ pub fn init_config() -> Configuration {
     let config: Configuration = serde_json::from_str(&data).expect("Couldn't parse JSON!");
 
     config
-}
-
-pub fn get_request(request: &String) -> Result<reqwest::Response, reqwest::Error> {
-    let response = reqwest::get(request);
-    response
 }

@@ -10,6 +10,7 @@ use ws2812_spi::Ws2812;
 mod app;
 mod config;
 mod generate;
+mod request;
 
 const NUM_LEDS: usize = 150;
 
