@@ -16,7 +16,7 @@ mod queue;
 const NUM_LEDS: usize = 150;
 
 fn main() {
-    let queue: queue::Queue<RGB8> = queue::Queue::new();
+    let mut queue: queue::Queue<RGB8> = queue::Queue::new();
     let spi = Spi::new(Bus::Spi0, SlaveSelect::Ss0, 3_000_000, Mode::Mode0).unwrap();
     let mut ws = Ws2812::new(spi);
     let mut configuration = config::init_config();
@@ -38,10 +38,14 @@ fn main() {
 
                     for i in 0..NUM_LEDS {
                         data[i] = color;
+
+                        if (queue.length() == NUM_LEDS) {
+                            queue.dequeue();
+                        }
+
+                        queue.enqueue(data[i]);
+                        ws.write(brightness(queue.queue.iter().cloned(), 32)).unwrap();
                     }
-                    
-                    ws.write(brightness(data.iter().cloned(), 32))
-                        .unwrap();
                 }
             },
             app::TVPower::On => {
@@ -54,54 +58,154 @@ fn main() {
 
                     match activeapp {
                         app::ActiveApp::Roku => {
-                            let data = change_color(&255, &0, &255);
-                            ws.write(brightness(data.iter().cloned(), 10))
-                                .unwrap();
+                            let color = RGB8::new(255, 0, 255);
+                            let mut data = [RGB8::default(); NUM_LEDS];
+
+                            for i in 0..NUM_LEDS {
+                                data[i] = color;
+
+                                if (queue.length() == NUM_LEDS) {
+                                    queue.dequeue();
+                                }
+
+                                queue.enqueue(data[i]);
+                                ws.write(brightness(queue.queue.iter().cloned(), 32)).unwrap();
+                            }   
                         },
                         app::ActiveApp::Hulu => {
-                            let data = change_color(&51, &255, &85);
-                            ws.write(brightness(data.iter().cloned(), 32))
-                                .unwrap();
+                            let color = RGB8::new(51, 255, 85);
+                            let mut data = [RGB8::default(); NUM_LEDS];
+
+                            for i in 0..NUM_LEDS {
+                                data[i] = color;
+
+                                if (queue.length() == NUM_LEDS) {
+                                    queue.dequeue();
+                                }
+
+                                queue.enqueue(data[i]);
+                                ws.write(brightness(queue.queue.iter().cloned(), 32)).unwrap();
+                            }
                         },
                         app::ActiveApp::Netflix => {
-                            let data = change_color(&255, &77, &77);
-                            ws.write(brightness(data.iter().cloned(), 32))
-                                .unwrap();
+                            let color = RGB8::new(255, 77, 77);
+                            let mut data = [RGB8::default(); NUM_LEDS];
+
+                            for i in 0..NUM_LEDS {
+                                data[i] = color;
+
+                                if (queue.length() == NUM_LEDS) {
+                                    queue.dequeue();
+                                }
+
+                                queue.enqueue(data[i]);
+                                ws.write(brightness(queue.queue.iter().cloned(), 32)).unwrap();
+                            }
                         },
                         app::ActiveApp::AmazonPrime => {
-                            let data = change_color(&99, &123, &255);
-                            ws.write(brightness(data.iter().cloned(), 32))
-                                .unwrap();
+                            let color = RGB8::new(99, 193, 255);
+                            let mut data = [RGB8::default(); NUM_LEDS];
+
+                            for i in 0..NUM_LEDS {
+                                data[i] = color;
+
+                                if (queue.length() == NUM_LEDS) {
+                                    queue.dequeue();
+                                }
+
+                                queue.enqueue(data[i]);
+                                ws.write(brightness(queue.queue.iter().cloned(), 32)).unwrap();
+                            }
                         },
                         app::ActiveApp::Pandora => {
-                            let data = change_color(&99, &123, &255);
-                            ws.write(brightness(data.iter().cloned(), 32))
-                                .unwrap();
+                            let color = RGB8::new(99, 123, 255);
+                            let mut data = [RGB8::default(); NUM_LEDS];
+
+                            for i in 0..NUM_LEDS {
+                                data[i] = color;
+
+                                if (queue.length() == NUM_LEDS) {
+                                    queue.dequeue();
+                                }
+
+                                queue.enqueue(data[i]);
+                                ws.write(brightness(queue.queue.iter().cloned(), 32)).unwrap();
+                            }
                         },
                         app::ActiveApp::Spotify => {
-                            let data = change_color(&51, &255, &85);
-                            ws.write(brightness(data.iter().cloned(), 32))
-                                .unwrap();
+                            let color = RGB8::new(51, 255, 85);
+                            let mut data = [RGB8::default(); NUM_LEDS];
+
+                            for i in 0..NUM_LEDS {
+                                data[i] = color;
+
+                                if (queue.length() == NUM_LEDS) {
+                                    queue.dequeue();
+                                }
+
+                                queue.enqueue(data[i]);
+                                ws.write(brightness(queue.queue.iter().cloned(), 32)).unwrap();
+                            }
                         },
                         app::ActiveApp::Plex => {
-                            let data = change_color(&255, &187, &51);
-                            ws.write(brightness(data.iter().cloned(), 32))
-                                .unwrap();
+                            let color = RGB8::new(255, 187, 51);
+                            let mut data = [RGB8::default(); NUM_LEDS];
+
+                            for i in 0..NUM_LEDS {
+                                data[i] = color;
+
+                                if (queue.length() == NUM_LEDS) {
+                                    queue.dequeue();
+                                }
+
+                                queue.enqueue(data[i]);
+                                ws.write(brightness(queue.queue.iter().cloned(), 32)).unwrap();
+                            }
                         },
                         app::ActiveApp::Crunchyroll => {
-                            let data = change_color(&255, &187, &51);
-                            ws.write(brightness(data.iter().cloned(), 32))
-                                .unwrap();
+                            let color = RGB8::new(255, 187, 51);
+                            let mut data = [RGB8::default(); NUM_LEDS];
+
+                            for i in 0..NUM_LEDS {
+                                data[i] = color;
+
+                                if (queue.length() == NUM_LEDS) {
+                                    queue.dequeue();
+                                }
+
+                                queue.enqueue(data[i]);
+                                ws.write(brightness(queue.queue.iter().cloned(), 32)).unwrap();
+                            }
                         },
                         app::ActiveApp::Funimation => {
-                            let data = change_color(&255, &0, &255);
-                            ws.write(brightness(data.iter().cloned(), 32))
-                                .unwrap();
+                            let color = RGB8::new(255, 0, 255);
+                            let mut data = [RGB8::default(); NUM_LEDS];
+
+                            for i in 0..NUM_LEDS {
+                                data[i] = color;
+
+                                if (queue.length() == NUM_LEDS) {
+                                    queue.dequeue();
+                                }
+
+                                queue.enqueue(data[i]);
+                                ws.write(brightness(queue.queue.iter().cloned(), 32)).unwrap();
+                            }
                         },
                         app::ActiveApp::VRV => {
-                            let data = change_color(&255, &187, &51);
-                            ws.write(brightness(data.iter().cloned(), 32))
-                                .unwrap();               
+                            let color = RGB8::new(255, 187, 51);
+                            let mut data = [RGB8::default(); NUM_LEDS];
+
+                            for i in 0..NUM_LEDS {
+                                data[i] = color;
+
+                                if (queue.length() == NUM_LEDS) {
+                                    queue.dequeue();
+                                }
+
+                                queue.enqueue(data[i]);
+                                ws.write(brightness(queue.queue.iter().cloned(), 32)).unwrap();
+                            }               
                         },
                         _ => println!("We don't know what app is running right now..."),
                     }
@@ -112,19 +216,4 @@ fn main() {
         let sec = time::Duration::from_secs(1);
         thread::sleep(sec);
     }            
-}
-
-fn new() -> () {
-    todo!()
-}
-
-fn change_color(num_one: &u8, num_two: &u8, num_three: &u8) -> [RGB8; 150] {
-    let color = RGB8::new(*num_one, *num_two, *num_three);
-    let mut data = [RGB8::default(); NUM_LEDS];
-
-    // for i in 0..NUM_LEDS {
-    //     data[i] = color;
-    // }
-
-    data
 }
