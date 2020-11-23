@@ -39,6 +39,7 @@ impl Configuration {
         );
 
         let response = request::get_request(&request);
+        
         match response {
             Ok(res) =>  {
                 let document = Document::from_read(res)
