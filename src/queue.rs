@@ -28,4 +28,8 @@ impl<T> Queue<T> {
     pub fn peek(&self) -> Option<&T> {
         self.queue.first()
     }
+
+    pub fn peek_at(&self, item: T) -> Option<&T> {
+        self.queue.get(item)
+    }
 }
