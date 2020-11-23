@@ -1,0 +1,13 @@
+[Unit]
+Description=Bleak, an LED "mood lighting" project
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=pi
+ExecStart=/home/pi/.cargo/bin/bleak
+
+[Install]
+WantedBy=multi-user.target
