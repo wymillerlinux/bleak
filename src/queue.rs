@@ -1,4 +1,4 @@
-struct Queue<T> {
+pub struct Queue<T> {
     pub queue: Vec<T>
 }
 
@@ -25,11 +25,15 @@ impl<T> Queue<T> {
         self.queue.is_empty()
     }
 
-    pub fn peek(&self) -> Option<&T> {
+    pub fn peek_first(&self) -> Option<&T> {
         self.queue.first()
     }
 
-    pub fn peek_at(&self, item: T) -> Option<&T> {
+    pub fn peek_last(&self) -> Option<&T> {
+        self.queue.last()
+    }
+
+    pub fn peek_at(&self, item: usize) -> Option<&T> {
         self.queue.get(item)
     }
 }

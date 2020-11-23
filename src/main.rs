@@ -16,8 +16,8 @@ mod queue;
 const NUM_LEDS: usize = 150;
 
 fn main() {
-    let spi = Spi::new(Bus::Spi0, SlaveSelect::Ss0, 3_000_000, Mode::Mode0)
-        .unwrap();
+    let queue: queue::Queue<RGB8> = queue::Queue::new();
+    let spi = Spi::new(Bus::Spi0, SlaveSelect::Ss0, 3_000_000, Mode::Mode0).unwrap();
     let mut ws = Ws2812::new(spi);
     let mut configuration = config::init_config();
     let mut is_headless: bool = false;
@@ -114,13 +114,17 @@ fn main() {
     }            
 }
 
+fn new() -> () {
+    todo!()
+}
+
 fn change_color(num_one: &u8, num_two: &u8, num_three: &u8) -> [RGB8; 150] {
     let color = RGB8::new(*num_one, *num_two, *num_three);
     let mut data = [RGB8::default(); NUM_LEDS];
 
-    for i in 0..NUM_LEDS {
-        data[i] = color;
-    }
+    // for i in 0..NUM_LEDS {
+    //     data[i] = color;
+    // }
 
     data
 }

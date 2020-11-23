@@ -21,3 +21,7 @@ version = "0.11.3"
 
 [dependencies.reqwest]
 version = "0.9.24"
+
+[dependencies.openssl]
+features = ["vendored"]
+version = "0.10.30"
