@@ -1,7 +1,10 @@
-# bleak
+![Bleak logo](docs/img/bleak_logo.png)
+
 Change the aura of the room with your smart TV!
 
-This project is licensed by the [Mozilla Public License v2](https://www.mozilla.org/en-US/MPL/2.0/).
+This project is licensed by the [Mozilla Public License v2](https://www.mozilla.org/en-US/MPL/2.0/). A copy of this license is in the project's root directory for your convenience.
+
+The logo is licensed by the [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
 
 ## What is this??
 
@@ -15,7 +18,7 @@ TL;DR
 
 Read the source code.
 
-## Pre req's
+## Pre-requisites
 
 * A Raspberry Pi (tested with a Raspberry Pi 4)
 * A WS2818 LED light strip (you can order this from [Amazon](https://www.amazon.com/s?k=ws2818+led+strip))
@@ -35,7 +38,7 @@ Black can usually signify ground. So it should sit on a ground GPIO pin. Again, 
 
 The wire I want to bring attention to is the other wire. This is the data wire. This wire holds all the data going to lights. This wire is placed on GPIO pin 19, an SPI wire. 
 
-SPI is kind of a neat but I'll spare you the details. If you would like to get more information on SPI, you can go read about it [here](https://en.wikipedia.org/wiki/Serial_Peripheral_Interface).
+SPI is kind of neat but I'll spare you the details. If you would like to get more information on SPI, you can go read about it [here](https://en.wikipedia.org/wiki/Serial_Peripheral_Interface).
 
 Once that's all done, flash an operating system onto a SD card, plug the Raspberry Pi, and you're all set. Onward! To the software portion!
 
@@ -75,7 +78,7 @@ The ipaddr and port keys will be pretty straight-forward. The tv, active_app, an
 
 Here's the default JSON file you can use:
 
-`
+```json
 {
     "ipaddr": "192.168.1.20",
     "port": 8060,
@@ -83,11 +86,11 @@ Here's the default JSON file you can use:
     "active_app": "Roku",
     "power_status": "PowerOn"
 }
-`
+```
 
 Make sure it's saved under `config.json`.
 
-**NOTE:** If you followed option one, you can skip the following, just run `bleak` or enable and run the systemd file. If you followed option two, please continue.
+**NOTE:** If you followed option one, you can skip the following, just run `bleak` or enable and run the systemd file, given you have copied and modififed the JSON file. If you followed option two, please continue.
 
 Next, there's two ways of compiling this project. One way is to compile on Rasberry Pi itself, which is a bit slow. The other way is some cross-compilation hoodoo voodoo magic which I have not explored as of yet. Once I figure out to use cross-compliation effectively, I will update this readme.
 
