@@ -11,6 +11,7 @@ mod app;
 mod config;
 mod generate;
 mod request;
+mod queue;
 
 const NUM_LEDS: usize = 150;
 
