@@ -1,5 +1,7 @@
 ![Bleak logo](docs/img/bleak_logo.png)
 
+[![Build Status](https://cicd.wyattjmiller.com/api/badges/wyatt/bleak/status.svg)](https://cicd.wyattjmiller.com/wyatt/bleak)
+
 Change the aura of the room with your smart TV!
 
 This project is licensed by the [Mozilla Public License v2](https://www.mozilla.org/en-US/MPL/2.0/). A copy of this license is in the project's root directory for your convenience.
@@ -92,11 +94,11 @@ Make sure it's saved under `config.json`.
 
 **NOTE:** If you followed option one, you can skip the following, just run `bleak` or enable and run the systemd file, given you have copied and modififed the JSON file. If you followed option two, please continue.
 
-Next, there's two ways of compiling this project. One way is to compile on Rasberry Pi itself, which is a bit slow. The other way is some cross-compilation hoodoo voodoo magic which I have not explored as of yet. Once I figure out to use cross-compliation effectively, I will update this readme.
+Next, there's two ways of compiling this project. One way is to compile on Rasberry Pi itself, which is a bit slow. The other way is some cross-compilation which takes a bit of paitence as you have to compile a GCC toolchain by yourself. Alot goes into GCC such as not limited to Glibc and Bison. Once I figure out to use cross-compliation effectively, I will update this readme and probably provide a shell script to automate building such a toolchain.
 
 Run `cargo` to compile it (I happened to compile this on the Raspberry Pi itself):
 
-`cargo build --release && cp ./target/release/bleak ~/.cargo/bin && bleak`
+`cargo build --release && cp ./target/armv7-unknown-linux-gnueabihf/release/bleak ~/.cargo/bin && bleak`
 
 or you can:
 

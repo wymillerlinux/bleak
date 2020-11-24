@@ -2,7 +2,7 @@
 authors = ["Wyatt J. Miller <wjmiller2016@gmail.com>"]
 edition = "2018"
 name = "bleak"
-version = "0.2.0"
+version = "0.3.0"
 
 [dependencies]
 chrono = "0.4.11"
