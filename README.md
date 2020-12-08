@@ -4,10 +4,13 @@
 
 Change the aura of the room with your smart TV!
 
+<<<<<<< HEAD
 This project is licensed by the [Mozilla Public License v2](https://www.mozilla.org/en-US/MPL/2.0/). A copy of this license is in the project's root directory for your convenience.
 
 The logo is licensed by the [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
 
+=======
+>>>>>>> 13477b05846fdcdca5cc86b976b6e491d6c054b5
 ## What is this??
 
 This came from an idea in high school where one could change a channel and some LEDs could change color. This project is just that, only with Smart TV's (Roku TV's and Roku devices supported). One changes the application to Netflix, the LEDs turn red. Another changes the application to Hulu, the LEDs turn green.
@@ -20,16 +23,24 @@ TL;DR
 
 Read the source code.
 
+<<<<<<< HEAD
 ## Pre-requisites
 
 * A Raspberry Pi (tested with a Raspberry Pi 4)
 * A WS2818 LED light strip (you can order this from [Amazon](https://www.amazon.com/s?k=ws2818+led+strip))
+=======
+## Pre req's
+
+* A Raspberry Pi (tested with a Raspberry Pi 4)
+* A WS2818B LED strip
+>>>>>>> 13477b05846fdcdca5cc86b976b6e491d6c054b5
 * Rust 1.40+ (this is the version of Rust `bleak` was written in) However, any version of Rust 2018 will most likely be fine
 
 ## Installation
 
 ### Hardware
 
+<<<<<<< HEAD
 The hardware installation process isn't too tedious. However, it does take some knowledge of Raspberry Pi's GPIO and how it works. 
 
 There should be three wires coming out the LED light strip. Typically, a red wire, a black wire, and another wire that could be any color besides red or black. 
@@ -43,6 +54,9 @@ The wire I want to bring attention to is the other wire. This is the data wire. 
 SPI is kind of neat but I'll spare you the details. If you would like to get more information on SPI, you can go read about it [here](https://en.wikipedia.org/wiki/Serial_Peripheral_Interface).
 
 Once that's all done, flash an operating system onto a SD card, plug the Raspberry Pi, and you're all set. Onward! To the software portion!
+=======
+Coming soon!
+>>>>>>> 13477b05846fdcdca5cc86b976b6e491d6c054b5
 
 ### Software
 
@@ -50,6 +64,7 @@ Download and install Rust. You can find Rust [here](https://www.rust-lang.org/) 
 
 `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
 
+<<<<<<< HEAD
 #### Option One
 
 We all know `cargo` is pretty great, admit it. You can use `cargo` to install something directly from `git`, which is pretty cool. Run the following:
@@ -60,6 +75,8 @@ We all know `cargo` is pretty great, admit it. You can use `cargo` to install so
 
 #### Option Two
 
+=======
+>>>>>>> 13477b05846fdcdca5cc86b976b6e491d6c054b5
 Clone this repository:
 
 `git clone https://github.com/wymillerlinux/bleak`
@@ -68,6 +85,7 @@ Asssuming one is a command line wizard, you have navigated to the root of the pr
 
 ## Compilation/Use
 
+<<<<<<< HEAD
 First, you have to manually create the JSON file for which `bleak` will read. 
 There are five values:
 - ipaddr
@@ -99,6 +117,13 @@ Next, there's two ways of compiling this project. One way is to compile on Rasbe
 Run `cargo` to compile it (I happened to compile this on the Raspberry Pi itself):
 
 `cargo build --release && cp ./target/armv7-unknown-linux-gnueabihf/release/bleak ~/.cargo/bin && bleak`
+=======
+There's two ways of compiling this project. One way is to compile on Rasberry Pi itself, which is a bit slow. The other way is some cross-compilation hoodoo voodoo magic which I have not explored as of yet. Once I figure out to use cross-compliation effectively, I will update this readme.
+
+Next, run `cargo` to compile it (I happened to compile this on the Raspberry Pi itself):
+
+`cargo build --release && cp ./target/release/bleak ~/.cargo/bin && bleak`
+>>>>>>> 13477b05846fdcdca5cc86b976b6e491d6c054b5
 
 or you can:
 
@@ -111,11 +136,17 @@ I wrote a systmed service file so starting and stopping would be like I'm starti
 ## Troubleshooting
 
 Things that I've noticed:
+<<<<<<< HEAD
 * ~~`bleak` will crash from time to time when grabbing responses. There's no error handling at this point.~~
 * `bleak` like to change color to some random color(s) when being told to change color to, say, green or red. I think that's just my light strip (or my breadboard I use for development) but I hav eno other light strips to test...
 * ~~Roku TV's tend to be slow while `bleak` is running. Can't reproduce this problem, however~~ Doesn't seem to do this anymore
 
 If you find any other issues with `bleak`, please send them my way in the form of a [new issue](https://scm.wyattjmiller.com/wyatt/bleak/issues/new).
+=======
+* `bleak` will fail from time to time when grabbing responses. There's no error handling at this point.
+* `bleak` like to change color to some random color(s) when being told to change color to, say, green or red.
+* Roku TV's tend to be slow while `bleak` is running. Can't reproduce this problem, however...
+>>>>>>> 13477b05846fdcdca5cc86b976b6e491d6c054b5
 
 ## Smart TV support
 
@@ -131,4 +162,8 @@ Future possibilities:
 
 ## Contribution
 
+<<<<<<< HEAD
 I'd love some contributions! Submit an issue or a PR and email me for some more information!
+=======
+I'd love some contributors! Submit a PR and email me for some more information!
+>>>>>>> 13477b05846fdcdca5cc86b976b6e491d6c054b5
