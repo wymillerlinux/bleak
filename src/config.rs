@@ -1,3 +1,4 @@
+use async_std::{prelude::*, task};
 use std::fs::File;
 use std::io::Read;
 use std::path::Path;
@@ -38,7 +39,7 @@ impl Configuration {
             port = self.port
         );
 
-        let response = request::get_request(&request);
+        let response = task::block_on(request::get_request(&request));
         
         match response {
             Ok(res) =>  {
@@ -61,7 +62,7 @@ impl Configuration {
             port = self.port
         );
         
-        let response = request::get_request(&request);
+        let response = task::block_on(request::get_request(&request));
         match response {
             Ok(res) =>  {
                 let document = Document::from_read(res)
