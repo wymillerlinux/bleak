@@ -122,6 +122,7 @@ If you find any other issues with `bleak`, please send them my way in the form o
 In development:
 
 * Roku devices and Roku TV's
+* Apple TV (HD/4K)
 
 Future possibilities:
 
